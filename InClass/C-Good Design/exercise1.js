@@ -40,12 +40,29 @@
    */
 
 
-function myFunction(salary, taxCode, incomeTax1, incomeTax2, ownsCar) {
+function getNetIncomeSalary(salary, taxCode, incomeTax1, incomeTax2, loan, tax) {
+  //Declaracion de las variables
   var totalIncomeTax = incomeTax1 + incomeTax2;
-  var studentLoan = (salary - 17775) * 0.09;
-  var originalSalary = salary;
-  var nationalInsurance = null;
+  var studentLoan = (salary - loan) * tax;
+  var netSalary = salary;
+  var nationalInsurance = getNationalInsurance(salary, taxCode); //Llama una funcion externa para su calculo
+  var deductions = [nationalInsurance, totalIncomeTax, studentLoan];
+  
+  //Determinar el verdadero salario neto (despues de las deduciones)
+  deductions.forEach(deduction => netSalary-= deduction);
+  
+  return (
+    "Your gross income is ï¿½" +
+    salary.toString() +
+    " and your net income is ï¿½" +
+    netSalary.toString() +
+    "."
+  );
+}
 
+function getNationalInsurance(salary, taxCode) {
+  //Determinar que tasa utilizar segun codigo
+  let nationalInsurance = null;
   if (taxCode === "1150L") {
     nationalInsurance = salary * 0.1;
   } else if (taxCode === "ST") {
@@ -53,20 +70,7 @@ function myFunction(salary, taxCode, incomeTax1, incomeTax2, ownsCar) {
   } else {
     nationalInsurance = salary * 0.08;
   }
-
-  var deductions = [nationalInsurance, totalIncomeTax, studentLoan];
-
-  salary = salary - deductions[0];
-  salary = salary - deductions[1];
-  salary = salary - deductions[2];
-
-  return (
-    "Your gross income is £" +
-    originalSalary.toString() +
-    " and your net income is £" +
-    salary.toString() +
-    "."
-  );
+  return nationalInsurance;
 }
 
-console.log(myFunction(28000, "1150L", 1000, 580, false));
+console.log(getNetIncomeSalary(28000, "1150L", 1000, 580,17775, 0.09));

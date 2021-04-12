@@ -3,7 +3,7 @@ const getRepos = function (repoName) {
     .then(data => data.json())
     .then(function (response) {
       return response.map(function (rep) {
-        console.log(rep.name);
+        //console.log(rep.name);
         var paragraph = document.createElement("p");
         paragraph.innerText = rep.name;
         myElement.appendChild(paragraph);
