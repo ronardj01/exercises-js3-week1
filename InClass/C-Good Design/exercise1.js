@@ -48,7 +48,7 @@ function getNetIncomeSalary(salary, taxCode, incomeTax1, incomeTax2, loan, tax) 
   var nationalInsurance = getNationalInsurance(salary, taxCode); //Llama una funcion externa para su calculo
   var deductions = [nationalInsurance, totalIncomeTax, studentLoan];
   
-  //Determinar el verdadero salario neto (despues de las deduciones)
+  //Determinar el verdadero salario neto (despues de las deducciones)
   deductions.forEach(deduction => netSalary-= deduction);
   
   return (
